@@ -1,0 +1,74 @@
+import datetime
+
+# Print name and date for your assignment
+print("Name: Abdullah Alghawi")
+print("Date:", datetime.date.today())
+print("-" * 40)
+
+# Tic Tac Toe Game
+
+def print_board(board):
+    print(f"{board[0]} | {board[1]} | {board[2]}")
+    print("--+---+--")
+    print(f"{board[3]} | {board[4]} | {board[5]}")
+    print("--+---+--")
+    print(f"{board[6]} | {board[7]} | {board[8]}")
+
+def check_winner(board):
+    # Horizontal
+    for i in range(0, 9, 3):
+        if board[i] == board[i+1] == board[i+2] != " ":
+            return board[i]
+
+    # Vertical
+    for i in range(3):
+        if board[i] == board[i+3] == board[i+6] != " ":
+            return board[i]
+
+    # Diagonal
+    if board[0] == board[4] == board[8] != " ":
+        return board[0]
+    if board[2] == board[4] == board[6] != " ":
+        return board[2]
+
+    return None
+
+def is_draw(board):
+    return " " not in board
+
+# Start Game
+board = [" "] * 9
+current_player = "X"
+
+print("Welcome to Tic Tac Toe Game!")
+
+while True:
+    print_board(board)
+    move = input(f"Player {current_player}, choose position (1-9): ")
+
+    if not move.isdigit() or not (1 <= int(move) <= 9):
+        print("Invalid input! Please choose a number from 1 to 9.")
+        continue
+
+    pos = int(move) - 1
+
+    if board[pos] != " ":
+        print("This position is already taken. Try again.")
+        continue
+
+    board[pos] = current_player
+
+    winner = check_winner(board)
+    if winner:
+        print_board(board)
+        print(f"🎉 Player {winner} wins!")
+        break
+
+    if is_draw(board):
+        print_board(board)
+        print("🤝 It's a draw!")
+        break
+
+    current_player = "O" if current_player == "X" else "X"
+
+print("Game Over!")
